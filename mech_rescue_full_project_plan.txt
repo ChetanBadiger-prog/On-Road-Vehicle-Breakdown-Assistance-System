@@ -1,0 +1,256 @@
+
+MECH RESCUE PROJECT – COMPLETE DESIGN & ARCHITECTURE PLAN
+=========================================================
+
+1. PROJECT OVERVIEW
+-------------------
+Project Name: Mech Rescue
+
+Mech Rescue is a full-stack, location-based roadside assistance platform that connects vehicle owners (Users) with verified Mechanics, managed and monitored by an Admin. The system supports real-time tracking, secure authentication, document verification, backend-driven payment calculation, and scalable architecture.
+
+Roles:
+- User
+- Mechanic
+- Admin
+
+Core Technologies (Suggested):
+- Frontend: React / Next.js (SPA)
+- Backend: Node.js (Express) or Supabase Functions
+- Database: Supabase (PostgreSQL)
+- Auth: Supabase Auth
+- Maps & Location: Google Maps API
+- Storage: Supabase Storage (images & documents)
+- Realtime: Supabase Realtime / WebSockets
+- Email: SMTP / Supabase Edge Functions
+- AI (Future-ready): OpenRouter / LLM APIs
+
+---------------------------------------------------------
+
+2. SYSTEM ARCHITECTURE
+---------------------
+Frontend (Web/App)
+  |
+  |-- Auth Requests
+  |-- API Calls
+  |-- Realtime Updates
+  |
+Backend (API Layer)
+  |
+  |-- Business Logic
+  |-- Payment Calculation
+  |-- Approval Logic
+  |
+Database (Supabase)
+  |
+  |-- Users
+  |-- Mechanics
+  |-- Admins
+  |-- Service Requests
+  |-- Payments
+  |-- Parts Catalog
+
+---------------------------------------------------------
+
+3. USER MODULE
+--------------
+
+3.1 User Registration & Login
+- Fields:
+  - Name
+  - Email
+  - Password
+  - Contact Number
+  - Address
+  - Live Location (Latitude, Longitude)
+- Authentication via Supabase Auth
+
+3.2 User Dashboard
+Tabs:
+1. Request History
+2. Profile
+3. Payments
+
+3.2.1 Request History
+- Pending Requests (scrollable)
+  - Status: Pending / Accepted / On the Way
+  - Track Mechanic (Live Map)
+- Completed Services (scrollable)
+  - Mechanic Name
+  - Date
+  - Amount
+  - Payment Method
+  - Rating (future)
+
+3.2.2 Profile
+- Editable:
+  - Name
+  - Contact Number
+  - Address
+- Save Changes button
+
+3.2.3 Payments
+- Payment Methods:
+  - Online
+  - UPI
+  - Cash
+- Selected method stored per service request
+
+3.3 Request Help Flow
+- Text description of issue
+- Upload damage photos
+- Confirm location on map
+- Create service request (status = pending)
+
+---------------------------------------------------------
+
+4. MECHANIC MODULE
+------------------
+
+4.1 Mechanic Registration (One-Time Only)
+- Name
+- Email
+- Password
+- Contact Number
+- Aadhar Number
+- Driving Licence Number
+- Shop Address
+- Shop Location (Map pin)
+- Upload documents (Aadhar, Licence)
+- Status set to: pending_approval
+
+4.2 Mechanic Login
+- Email/User ID + Password
+- Direct dashboard access after approval
+
+4.3 Mechanic Dashboard
+Tabs:
+1. Job Requests
+2. My Profile
+3. Earnings
+
+4.3.1 Job Requests
+- New Requests:
+  - User name
+  - Issue description
+  - Distance
+  - Photos
+  - Accept / Reject
+- Active Jobs:
+  - Update status: On the way / Arrived / Completed
+  - Navigation via Google Maps
+  - Live location sharing
+
+4.3.2 My Profile
+- Editable:
+  - Name
+  - Contact
+  - Shop Address
+  - Shop Location
+- Read-only:
+  - Aadhar
+  - Licence
+
+4.3.3 Earnings
+- Jobs completed
+- Total earnings
+- Payment breakdown
+
+---------------------------------------------------------
+
+5. ADMIN MODULE
+---------------
+
+5.1 Admin Login
+- Pre-created admin credentials
+- No public signup
+
+5.2 Admin Dashboard Tabs
+1. Mechanic Approvals
+2. Users
+3. Mechanics
+4. Service Requests
+5. Payments & Reports
+
+5.3 Mechanic Approval System (Core)
+- Admin receives email on mechanic registration
+- Email contains:
+  - Mechanic details
+  - Document links
+  - Two buttons:
+    - Accept
+    - Reject
+
+5.4 Approval Logic
+- Accept:
+  - Mechanic status = approved
+  - Approval email sent
+- Reject:
+  - Mechanic status = rejected
+  - Rejection email sent
+
+---------------------------------------------------------
+
+6. GOOGLE MAPS & TRACKING
+------------------------
+- User location captured at request time
+- Mechanic location tracked in real-time
+- Distance calculation using Google Maps API
+- Live tracking shown to user after acceptance
+
+---------------------------------------------------------
+
+7. PAYMENT & BILLING LOGIC (BACKEND ONLY)
+----------------------------------------
+
+7.1 Pricing Components
+- Base charge
+- Distance charge (per km)
+- Parts replacement cost
+
+7.2 Formula
+Total Amount =
+  Base Charge +
+  (Distance in KM × Cost per KM) +
+  Sum of Parts Prices
+
+7.3 Rules
+- Calculations only in backend
+- User & mechanic cannot edit final amount
+- Admin can audit all bills
+
+---------------------------------------------------------
+
+8. DATABASE TABLES (HIGH LEVEL)
+-------------------------------
+- users
+- mechanics
+- admins
+- service_requests
+- payments
+- parts_catalog
+- approval_logs
+
+---------------------------------------------------------
+
+9. SECURITY CONSIDERATIONS
+--------------------------
+- Role-based access control
+- Admin approval mandatory for mechanics
+- Secure document storage
+- One-time, time-limited approval links
+- Backend-only sensitive logic
+
+---------------------------------------------------------
+
+10. FUTURE ENHANCEMENTS
+-----------------------
+- AI issue detection from text/photos
+- Smart mechanic auto-matching
+- Ratings & reviews
+- Subscriptions
+- GST & invoices
+- Mobile app version
+
+---------------------------------------------------------
+
+END OF DOCUMENT
